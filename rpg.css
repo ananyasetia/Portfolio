@@ -1,0 +1,277 @@
+/* ============================================================
+   RPG PORTFOLIO — the scene image IS the canvas.
+   Interactive elements are % positioned overlays on top of it.
+   ============================================================ */
+
+.rpg-viewport {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #17121c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: url('/leaf-cursor.png') 6 4, auto;
+}
+
+/* The stage keeps the exact aspect ratio of the artwork (2786 x 1536) */
+.rpg-stage {
+  position: relative;
+  width: min(100vw, calc(100vh * (2786 / 1536)));
+  aspect-ratio: 2786 / 1536;
+  background-image: url('/scene.jpg');
+  background-size: 100% 100%;
+  user-select: none;
+  font-family: var(--font-rpg), 'IBM Plex Mono', monospace;
+}
+
+.rpg-stage button,
+.rpg-stage a {
+  cursor: url('/leaf-cursor.png') 6 4, pointer;
+  font-family: inherit;
+}
+
+/* ---------- grain (matches the tactile film of the art) ---------- */
+.rpg-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+}
+
+/* ---------------------- TAB HOTSPOTS ---------------------- */
+.rpg-tab {
+  position: absolute;
+  top: 6.5%;
+  height: 4.6%;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  padding: 0;
+  font-weight: 700;
+  font-size: clamp(10px, 1.35vw, 26px);
+  letter-spacing: 0.02em;
+  color: transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.rpg-tab:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 16px 4px rgba(178, 224, 124, 0.55);
+}
+
+/* When PROJECTS view is NOT active, chips get re-skinned on top of the art */
+.rpg-tab.chip {
+  color: #2b241c;
+  background: #d6bf95;
+  border: 3px solid #2b241c;
+  box-shadow: inset 0 0 0 2px #c4ab7e;
+}
+.rpg-tab.chip.active {
+  background: #b5dd7d;
+  box-shadow:
+    inset 0 0 0 2px #d5efab,
+    0 0 18px 5px rgba(178, 224, 124, 0.75);
+}
+
+.tab-projects { left: 49.3%;  width: 11.7%; }
+.tab-skills   { left: 61.6%;  width: 11.8%; }
+.tab-vsco     { left: 73.7%;  width: 11.5%; }
+.tab-socials  { left: 85.3%;  width: 13.9%; }
+
+/* ---------------- PROJECT SLOT HOTSPOTS (baked art) ---------------- */
+.rpg-slot-hotspot {
+  position: absolute;
+  left: 45.1%;
+  width: 6.7%;
+  height: 10.4%;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.rpg-slot-hotspot:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 14px 3px rgba(178, 224, 124, 0.6);
+}
+
+/* ---------------------- OVERLAY PANEL ---------------------- */
+.rpg-panel {
+  position: absolute;
+  left: 44.65%;
+  top: 13.4%;
+  width: 53.75%;
+  height: 79.2%;
+  background: #dec09a;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 1.6% 2.2%;
+  color: #4a3a28;
+}
+.rpg-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+}
+
+/* heading with the cropped vine flourishes from the original art */
+.rpg-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  margin: 0.6em 0 0.9em;
+}
+.rpg-heading h2 {
+  margin: 0;
+  font-size: clamp(16px, 1.9vw, 40px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #2b241c;
+}
+.rpg-heading img {
+  height: clamp(12px, 1.6vw, 34px);
+  width: auto;
+}
+.rpg-heading img.flip {
+  transform: scaleX(-1);
+}
+
+.rpg-subheading {
+  text-align: center;
+  font-size: clamp(13px, 1.45vw, 30px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #2b241c;
+  margin: 0.8em 0 0.7em;
+}
+
+/* ---------------------- SKILL SLOTS ---------------------- */
+.rpg-skill-row {
+  display: flex;
+  justify-content: center;
+  gap: 2.2%;
+  margin-bottom: 1.2em;
+  flex-wrap: wrap;
+}
+.rpg-skill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35em;
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition: transform 0.15s ease;
+}
+.rpg-skill:hover { transform: scale(1.06); }
+.rpg-skill .tile {
+  width: clamp(38px, 4.6vw, 96px);
+  height: clamp(38px, 4.6vw, 96px);
+  border-radius: 22%;
+  background: #efe3cb;
+  border: 3px solid #3a2f22;
+  box-shadow: 2px 3px 0 rgba(58, 47, 34, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.rpg-skill:hover .tile {
+  background: #dff0bd;
+  box-shadow: 0 0 16px 5px rgba(178, 224, 124, 0.75);
+}
+.rpg-skill .tile img {
+  width: 68%;
+  height: 68%;
+  object-fit: contain;
+}
+.rpg-skill .label {
+  font-size: clamp(10px, 1.15vw, 24px);
+  font-weight: 600;
+  color: #2b241c;
+}
+
+/* ---------------------- VSCO GALLERY ---------------------- */
+.rpg-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4%;
+  padding: 0 4%;
+}
+.rpg-photo {
+  aspect-ratio: 4 / 5;
+  background: #f5efe2;
+  border: 3px solid #8c7a5f;
+  box-shadow: 3px 4px 0 rgba(58, 47, 34, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(9px, 1vw, 20px);
+  font-weight: 600;
+  color: #a99676;
+  letter-spacing: 0.08em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.rpg-photo:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 14px 4px rgba(178, 224, 124, 0.55);
+}
+
+/* ---------------------- SOCIAL BADGES ---------------------- */
+.rpg-socials {
+  display: flex;
+  justify-content: center;
+  gap: 3%;
+  margin-top: 1.5em;
+}
+.rpg-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  padding: 0.5em 1.1em;
+  background: #efe3cb;
+  border: 3px solid #3a2f22;
+  box-shadow: 3px 4px 0 rgba(58, 47, 34, 0.45);
+  border-radius: 6px;
+  text-decoration: none;
+  color: #2b241c;
+  font-weight: 700;
+  font-size: clamp(11px, 1.3vw, 26px);
+  letter-spacing: 0.05em;
+  image-rendering: pixelated;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.rpg-badge:hover {
+  transform: scale(1.04);
+  background: #dff0bd;
+  box-shadow: 0 0 16px 5px rgba(178, 224, 124, 0.7);
+}
+.rpg-badge img {
+  width: clamp(16px, 1.8vw, 38px);
+  height: clamp(16px, 1.8vw, 38px);
+}
+
+/* mini-map cropped from the original art, reused inside overlay panels */
+.rpg-minimap {
+  position: absolute;
+  right: 2.5%;
+  bottom: 3%;
+  width: 51%;
+  border-radius: 8px;
+  border: 3px solid #3a2f22;
+}
+
+/* faded placeholder note (projects have hotspots on the baked art) */
+.rpg-empty-note {
+  text-align: center;
+  font-size: clamp(11px, 1.2vw, 24px);
+  color: #8c7a5f;
+  font-weight: 600;
+  margin-top: 1em;
+}
